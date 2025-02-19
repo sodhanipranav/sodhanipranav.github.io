@@ -176,7 +176,7 @@ function getChapterTitle(chapterNum) {
         case "1": return "The California Driver's License";
         case "2": return "Getting an Instruction Permit and Driver's License";
         case "3": return "The Testing Process";
-        case "4": return "Changing, Replacing, and Renewing YourDriver's License";
+        case "4": return "Changing, Replacing, and Renewing Your Driver's License";
         case "5": return "An Introduction to Driving";
         case "6": return "Navigating the Roads";
         case "7": return "Laws and Rules of the Road";
@@ -234,11 +234,12 @@ function showQuestion() {
     const question = quizData[currentChapter].questions[currentQuestionIndex];
     const totalQuestions = quizData[currentChapter].questions.length;
     
+    // Update progress and score in a single line with colored incorrect count
     const questionProgress = document.getElementById('question-progress');
-    questionProgress.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+    questionProgress.innerHTML = `Question ${currentQuestionIndex + 1} of ${totalQuestions}   |   <span class="incorrect-count">Incorrect: ${incorrectCount}</span>`;
     
-    // Update score display to show correct/incorrect counts
-    scoreDisplay.textContent = `Correct: ${correctCount}, Incorrect: ${incorrectCount}`;
+    // Remove the separate score display
+    scoreDisplay.style.display = 'none';
     
     questionText.textContent = question.question;
     optionsContainer.innerHTML = '';
@@ -291,8 +292,10 @@ function checkAnswer(selectedLetter) {
         incorrectQuestions.push(question);
     }
     
-    // Update score display
-    scoreDisplay.textContent = `Correct: ${correctCount}, Incorrect: ${incorrectCount}`;
+    // Update the combined progress and score display with colored incorrect count
+    const totalQuestions = quizData[currentChapter].questions.length;
+    const questionProgress = document.getElementById('question-progress');
+    questionProgress.innerHTML = `Question ${currentQuestionIndex + 1} of ${totalQuestions}   |   <span class="incorrect-count">Incorrect: ${incorrectCount}</span>`;
 
     const noteElement = document.createElement('div');
     noteElement.id = 'question-note';
@@ -390,7 +393,7 @@ function startRetest() {
     // Create a deep copy of the most recent incorrect questions
     const retestQuestions = {
         questions: incorrectQuestions.map(q => ({...q})),
-        title: 'Retest Incorrect Questions'
+        title: 'Retest Incorrect Ones'
     };
     
     // Clear the incorrect questions array for the next round
@@ -399,8 +402,8 @@ function startRetest() {
     // Reset display
     resultSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
-    document.getElementById('chapter-title').textContent = 'Retest Incorrect Questions';
-    scoreDisplay.textContent = `Correct: ${correctCount}, Incorrect: ${incorrectCount}`;
+    document.getElementById('chapter-title').textContent = 'Retest Incorrect Ones';
+    scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
     
     // Store retest questions in quizData
     currentChapter = 'retest';
