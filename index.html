@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepDMV</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="menu-section">
+            <button id="menu-btn" class="menu-btn">☰</button>
+            <h1 class="brand">PrepDMV</h1>
+        </div>
+        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('radhika100499', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support me',
+    'floating-chat.donateButton.background-color': '#5cb85c',
+    'floating-chat.donateButton.text-color': '#fff'
+  });
+</script>
+    </div>
+    <div id="side-menu" class="side-menu">
+        <div class="side-menu-header">
+            <h2>Chapters</h2>
+            <button id="close-menu" class="close-btn">×</button>
+        </div>
+        <div id="menu-chapters-list" class="menu-chapters-list"></div>
+    </div>
+    <div id="menu-overlay" class="menu-overlay"></div>
+    <div class="container">
+        <div id="chapter-selection" class="section">
+            <h1>California DMV Test</h1>
+            <div id="chapters-list"></div>
+        </div>
+
+        <div id="quiz-section" class="section hidden">
+            <h2 id="chapter-title"></h2>
+            <p id="question-progress" class="progress-text">Question 1 of 1</p>
+            <div id="score-display"><span id="score">0</span></div>
+            <div id="question-container">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+                <!--<div class="question-nav">
+                    <button id="prev-question" class="nav-btn">←</button>
+                    <button id="next-question" class="nav-btn">→</button>
+                </div> -->
+            </div>
+            <button id="next-btn" class="hidden">Next Question</button>
+            <button id="finish-btn" class="hidden">Finish Quiz</button>
+        </div>
+
+        <div id="result-section" class="section hidden">
+            <h2>Quiz Complete!</h2>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <button id="retest-btn" class="hidden">Retest Incorrect Questions</button>
+            <button id="restart-btn">Try Another Chapter</button>
+        </div>
+    </div>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+        function openKofi() {
+            window.open('https://ko-fi.com/radhika100499', '_blank');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 
