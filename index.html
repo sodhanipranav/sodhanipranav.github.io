@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrepDMV</title>
     <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
     <div class="top-bar">
@@ -18,13 +19,17 @@
     'type': 'floating-chat',
     'floating-chat.donateButton.text': 'Support me',
     'floating-chat.donateButton.background-color': '#5cb85c',
-    'floating-chat.donateButton.text-color': '#fff'
+    'floating-chat.donateButton.text-color': '#fff',
   });
 </script>
+<style>
+    .floatingchat-container-wrap { left:unset; right: 16px; }
+    .floating-chat-kofi-popup-iframe { left:unset; right: 16px; }
+</style>
     </div>
     <div id="side-menu" class="side-menu">
         <div class="side-menu-header">
-            <h2>Chapters</h2>
+            <h2><span style="color: white;">Chapters</span></h2>
             <button id="close-menu" class="close-btn">×</button>
         </div>
         <div id="menu-chapters-list" class="menu-chapters-list"></div>
@@ -55,7 +60,7 @@
         <div id="result-section" class="section hidden">
             <h2>Quiz Complete!</h2>
             <p>Final Score: <span id="final-score">0</span></p>
-            <button id="retest-btn" class="hidden">Retest Incorrect Questions</button>
+            <button id="retest-btn" class="hidden">Retest Incorrect Ones</button>
             <button id="restart-btn">Try Another Chapter</button>
         </div>
     </div>
