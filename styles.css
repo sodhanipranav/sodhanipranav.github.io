@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    line-height: 1.3;
     background-color: #f0f2f5;
 }
 
@@ -29,7 +29,6 @@ body {
 
 h1, h2 {
     color: #333;
-    margin-bottom: 1rem;
 }
 
 button {
@@ -40,7 +39,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     margin: 10px 0;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
 }
 
 button:hover {
@@ -103,7 +102,6 @@ button:hover {
     font-size: 1.0rem;
     padding: 15px 20px;
     text-align: left;
-    line-height: 1.4;
     border-radius: 8px;
 }
 
@@ -125,14 +123,15 @@ button:hover {
 
 .progress-text {
     color: #666;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
     font-weight: 500;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
+/* Hide the separate score display */
 #score-display {
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    color: #666;
+    display: none;
 }
 
 /* Add styles for the counts */
@@ -304,4 +303,11 @@ button:hover {
 
 #retest-btn:hover {
     background-color: #c82333;
-} 
+}
+
+/* Add styles for chapter titles */
+#chapter-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
