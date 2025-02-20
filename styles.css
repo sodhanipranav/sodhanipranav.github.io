@@ -52,6 +52,12 @@ button:hover {
     margin: 10px 0;
     text-align: left;
     font-size: 0.9rem;
+    background-color: #e9f1e9;
+    color:#041704
+}
+
+.chapter-btn:hover {
+    background-color: #cbebcb;
 }
 
 .top-bar {
@@ -72,7 +78,7 @@ button:hover {
     margin: 0;
     font-size: 1.3rem;
     font-weight: bold;
-    color: #e8f5e9;
+    color: #fff;
     line-height: 1;
 }
 
@@ -256,7 +262,7 @@ button:hover {
 }
 
 .menu-chapters-list {
-    padding: 1rem;
+    padding: 0.7rem;
     overflow-y: auto;
     max-height: calc(100vh - 60px);
 }
@@ -264,7 +270,7 @@ button:hover {
 .menu-chapter-btn {
     display: block;
     width: 100%;
-    padding: 12px 15px;
+    padding: 8px 12px;
     margin: 5px 0;
     text-align: left;
     background: none;
@@ -308,6 +314,6 @@ button:hover {
 /* Add styles for chapter titles */
 #chapter-title {
     font-size: 1.3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     color: #333;
 }
