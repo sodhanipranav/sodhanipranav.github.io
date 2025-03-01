@@ -11,7 +11,7 @@
     <div class="top-bar">
         <div class="menu-section">
             <button id="menu-btn" class="menu-btn">☰</button>
-            <h1 class="brand">DMV Question Bank</h1>
+            <a href="/" class="brand-link"><h1 class="brand">DMV Question Bank</h1></a>
         </div>
 <!--        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 <script>
@@ -41,7 +41,29 @@
     </div>
     <div id="menu-overlay" class="menu-overlay"></div>
     <div class="container">
-        <div id="chapter-selection" class="section">
+        <!-- Landing Page Content -->
+        <div id="landing-page" class="section">
+            <div class="hero-section">
+                <h1>Master the California DMV Test – One Chapter at a Time!</h1>
+                <p class="subheadline">Read, practice, and retest real DMV questions to ensure you pass with confidence.</p>
+                <button id="browse-chapters" class="cta-button">Start Practicing ☰</button>
+            </div>
+
+            <div class="features">
+                <h2>Why Choose Us?</h2>
+                <div class="feature-list">
+                    <div class="feature">Real DMV Questions</div>
+                    <div class="feature">Chapter-wise Learning</div>
+                    <div class="feature">Instant Feedback & Explanations</div>
+                    <div class="feature">Retest for Wrong Answers</div>
+                    <div class="feature">No Ads, No Clutter</div>
+                    <div class="feature">100% Free</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Existing quiz sections (hidden initially) -->
+        <div id="chapter-selection" class="section hidden">
             <h2>California DMV Test</h2>
             <div id="chapters-list"></div>
         </div>
