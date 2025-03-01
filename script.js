@@ -31,6 +31,8 @@ const closeMenu = document.getElementById('close-menu');
 const menuOverlay = document.getElementById('menu-overlay');
 const menuChaptersList = document.getElementById('menu-chapters-list');
 const retestBtn = document.getElementById('retest-btn');
+const browseChaptersBtn = document.getElementById('browse-chapters');
+const landingPage = document.getElementById('landing-page');
 //const prevQuestionBtn = document.getElementById('prev-question');
 //const nextQuestionBtn = document.getElementById('next-question');
 
@@ -214,17 +216,59 @@ function initializeChapters() {
     });
 }
 
+// Add this function to handle chapter menu opening
+function openChapterMenu() {
+    console.log('Opening chapter menu'); // Debug log
+    sideMenu.classList.add('active');
+    menuOverlay.classList.add('active');
+}
+
+// Update the initialization section
+function initializeUI() {
+    // Menu button in top bar
+    menuBtn.addEventListener('click', openChapterMenu);
+
+    // Start practicing button
+    if (browseChaptersBtn) {
+        console.log('Browse chapters button found'); // Debug log
+        browseChaptersBtn.addEventListener('click', openChapterMenu);
+    } else {
+        console.error('Browse chapters button not found'); // Debug log
+    }
+
+    // Close menu button
+    closeMenu.addEventListener('click', () => {
+        sideMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+    });
+
+    // Overlay click
+    menuOverlay.addEventListener('click', () => {
+        sideMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+    });
+}
+
 // Update startChapter function
 function startChapter(chapterNum) {
     currentChapter = chapterNum;
     currentQuestionIndex = 0;
     correctCount = 0;
     incorrectCount = 0;
-    scoreDisplay.textContent = `❌: ${incorrectCount}`;
+    scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
+    
+    // Hide landing page and show quiz section
+    landingPage.classList.add('hidden');
     chapterSelection.classList.add('hidden');
     quizSection.classList.remove('hidden');
+    
     const chapterTitle = quizData[chapterNum].title;
     document.getElementById('chapter-title').textContent = `Chapter ${chapterNum}: ${chapterTitle}`;
+    
+    // Close the menu
+    sideMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+    
     showQuestion();
 }
 
@@ -367,22 +411,6 @@ nextQuestionBtn.addEventListener('click', () => {
 });
 */
 
-// Add menu event listeners
-menuBtn.addEventListener('click', () => {
-    sideMenu.classList.add('active');
-    menuOverlay.classList.add('active');
-});
-
-closeMenu.addEventListener('click', () => {
-    sideMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
-});
-
-menuOverlay.addEventListener('click', () => {
-    sideMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
-});
-
 // Update startRetest function
 function startRetest() {
     isRetestMode = true;
@@ -415,6 +443,9 @@ function startRetest() {
 // Add event listener for retest button
 retestBtn.addEventListener('click', startRetest);
 
-// Modify the initialization
-// Replace the existing initializeChapters() call with:
-fetchQuizData(); 
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded'); // Debug log
+    initializeUI();
+    fetchQuizData();
+}); 
