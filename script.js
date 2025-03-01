@@ -257,9 +257,10 @@ function startChapter(chapterNum) {
     incorrectCount = 0;
     scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
     
-    // Hide landing page and show quiz section
+    // Hide all sections first
     landingPage.classList.add('hidden');
     chapterSelection.classList.add('hidden');
+    resultSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
     
     const chapterTitle = quizData[chapterNum].title;
