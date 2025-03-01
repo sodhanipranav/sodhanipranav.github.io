@@ -12,15 +12,16 @@ body {
 
 .container {
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 20px;
+    margin: 1rem auto;
+    padding: 15px;
 }
 
 .section {
     background-color: white;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
 }
 
 .hidden {
@@ -76,10 +77,20 @@ button:hover {
 
 .brand {
     margin: 0;
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 500;
     color: #fff;
     line-height: 1;
+    cursor: pointer;
+}
+
+.brand-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand-link:hover {
+    color: #e8f5e9;
 }
 
 .support-btn {
@@ -270,7 +281,7 @@ button:hover {
 .menu-chapter-btn {
     display: block;
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 15px;
     margin: 5px 0;
     text-align: left;
     background: none;
@@ -278,6 +289,7 @@ button:hover {
     border-radius: 4px;
     color: #333;
     transition: all 0.2s;
+    font-size: 0.95rem;
 }
 
 .menu-chapter-btn:hover {
@@ -288,16 +300,76 @@ button:hover {
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
     .container {
-        margin: 1rem auto;
+        margin: 0.5rem auto;
         padding: 10px;
     }
 
     .section {
-        padding: 1rem;
+        padding: 1.2rem;
     }
 
     .option-btn {
         padding: 12px 15px;
+    }
+
+    .hero-section {
+        padding: 2rem 1rem;
+        margin: 0.5rem 0 1.5rem;
+    }
+
+    .hero-section h1 {
+        font-size: 1.6rem;
+    }
+
+    .subheadline {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .steps {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .step {
+        padding: 1.2rem;
+    }
+
+    .feature {
+        padding: 1rem;
+    }
+
+    /* Adjust side menu for mobile */
+    .side-menu {
+        width: 85%;
+        left: -85%;
+    }
+
+    .menu-chapters-list {
+        padding: 0.5rem;
+    }
+
+    /* Make buttons more touch-friendly */
+    .menu-chapter-btn,
+    .option-btn,
+    button {
+        padding: 12px 15px;
+        min-height: 44px; /* Better touch targets */
+    }
+}
+
+/* Small phone optimizations */
+@media (max-width: 380px) {
+    .hero-section h1 {
+        font-size: 1.4rem;
+    }
+
+    .step h3 {
+        font-size: 1.1rem;
+    }
+
+    .feature {
+        font-size: 0.95rem;
     }
 }
 
@@ -316,4 +388,106 @@ button:hover {
     font-size: 1.3rem;
     margin-bottom: 0.6rem;
     color: #333;
+}
+
+/* Add these new styles */
+.hero-section {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 1rem 0 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.hero-section h1 {
+    font-size: 2rem;
+    color: #041704;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.subheadline {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.features {
+    padding-top: 0;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.feature-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 0;
+}
+
+.feature {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature:hover {
+    transform: translateY(-3px);
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Add new checkmark style */
+.feature::before {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    flex-shrink: 0;
 }
