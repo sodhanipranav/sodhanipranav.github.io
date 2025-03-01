@@ -247,6 +247,14 @@ button:hover {
     align-items: center;
 }
 
+.side-menu-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1;
+}
+
 .close-btn {
     background: none;
     border: none;
@@ -393,7 +401,7 @@ button:hover {
 /* Add these new styles */
 .hero-section {
     text-align: center;
-    padding: 2.5rem 1.5rem;
+    padding: 2.0rem 1.5rem;
     background-color: #f8f9fa;
     border-radius: 8px;
     margin: 1rem 0 2rem;
@@ -402,7 +410,7 @@ button:hover {
 }
 
 .hero-section h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
     color: #041704;
     margin-bottom: 1rem;
     line-height: 1.2;
@@ -444,7 +452,7 @@ button:hover {
 }
 
 .features h2 {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     color: #333;
     margin-bottom: 1.5rem;
     font-weight: 600;
@@ -490,4 +498,10 @@ button:hover {
     color: white;
     font-weight: bold;
     flex-shrink: 0;
+}
+
+/* Add this style for the highlighted text */
+.highlight {
+    color: #2e9031;
+    font-weight: 500;
 }
