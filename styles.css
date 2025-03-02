@@ -241,7 +241,7 @@ button:hover {
 .side-menu-header {
     background: #041704;
     color: white;
-    padding: 1rem;
+    padding: 0.38rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
