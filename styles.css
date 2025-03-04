@@ -33,7 +33,7 @@ h1, h2 {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -504,4 +504,22 @@ button:hover {
 .highlight {
     color: #2e9031;
     font-weight: 500;
+}
+
+/* Add styles for the result section */
+#result-section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+#result-section p {
+    font-size: 1.1rem;
+    margin-bottom: 1.4rem;
+    color: #000;
+}
+
+#final-score {
+    font-weight: 500;
+    color: #333;
 }
