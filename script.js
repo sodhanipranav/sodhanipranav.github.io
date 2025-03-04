@@ -380,19 +380,17 @@ finishBtn.addEventListener('click', () => {
 });
 
 restartBtn.addEventListener('click', () => {
-    resultSection.classList.add('hidden');
-    chapterSelection.classList.remove('hidden');
-    chaptersList.innerHTML = '';
-    menuChaptersList.innerHTML = '';
+    // Open the side menu without hiding the result section
+    sideMenu.classList.add('active');
+    menuOverlay.classList.add('active');
     
-    // Clean up retest data
+    // Clean up retest data if needed
     if (isRetestMode) {
         delete quizData['retest'];
     }
     
     isRetestMode = false;
     incorrectQuestions = [];
-    initializeChapters();
 });
 
 // Add event listeners for navigation
@@ -422,7 +420,7 @@ function startRetest() {
     // Create a deep copy of the most recent incorrect questions
     const retestQuestions = {
         questions: incorrectQuestions.map(q => ({...q})),
-        title: 'Retest Incorrect Ones'
+        title: 'Retest Wrong Answers'
     };
     
     // Clear the incorrect questions array for the next round
@@ -431,7 +429,7 @@ function startRetest() {
     // Reset display
     resultSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
-    document.getElementById('chapter-title').textContent = 'Retest Incorrect Ones';
+    document.getElementById('chapter-title').textContent = 'Retest Wrong Answers';
     scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
     
     // Store retest questions in quizData
