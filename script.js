@@ -251,11 +251,15 @@ function initializeUI() {
 
 // Update startChapter function
 function startChapter(chapterNum) {
-    currentChapter = chapterNum;
-    currentQuestionIndex = 0;
-    correctCount = 0;
-    incorrectCount = 0;
-    scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
+    // Only reset if we're actually changing chapters
+    if (currentChapter !== chapterNum) {
+        currentChapter = chapterNum;
+        currentQuestionIndex = 0;
+        correctCount = 0;
+        incorrectCount = 0;
+        incorrectQuestions = []; // Reset incorrect questions only when actually changing chapters
+        isRetestMode = false;
+    }
     
     // Hide all sections first
     landingPage.classList.add('hidden');
@@ -333,8 +337,10 @@ function checkAnswer(selectedLetter) {
         selectedButton.classList.add('incorrect');
         correctButton.classList.add('correct');
         incorrectCount++;
-        // Store incorrect question (both in regular mode and retest mode)
-        incorrectQuestions.push(question);
+        // Only store incorrect questions during regular mode, not during retest
+        if (!isRetestMode) {
+            incorrectQuestions.push(question);
+        }
     }
     
     // Update the combined progress and score display with colored incorrect count
@@ -380,17 +386,9 @@ finishBtn.addEventListener('click', () => {
 });
 
 restartBtn.addEventListener('click', () => {
-    // Open the side menu without hiding the result section
+    // Only open the side menu, don't reset anything
     sideMenu.classList.add('active');
     menuOverlay.classList.add('active');
-    
-    // Clean up retest data if needed
-    if (isRetestMode) {
-        delete quizData['retest'];
-    }
-    
-    isRetestMode = false;
-    incorrectQuestions = [];
 });
 
 // Add event listeners for navigation
@@ -412,25 +410,27 @@ nextQuestionBtn.addEventListener('click', () => {
 
 // Update startRetest function
 function startRetest() {
+    if (incorrectQuestions.length === 0) {
+        alert('No questions to retest!');
+        return;
+    }
+
     isRetestMode = true;
     currentQuestionIndex = 0;
     correctCount = 0;
     incorrectCount = 0;
     
-    // Create a deep copy of the most recent incorrect questions
+    // Create a deep copy of incorrect questions
     const retestQuestions = {
         questions: incorrectQuestions.map(q => ({...q})),
         title: 'Retest Wrong Answers'
     };
     
-    // Clear the incorrect questions array for the next round
-    incorrectQuestions = [];
-    
     // Reset display
     resultSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
     document.getElementById('chapter-title').textContent = 'Retest Wrong Answers';
-    scoreDisplay.textContent = `Incorrect: ${incorrectCount}`;
+    scoreDisplay.textContent = `Correct: ${correctCount}, Incorrect: ${incorrectCount}`;
     
     // Store retest questions in quizData
     currentChapter = 'retest';
