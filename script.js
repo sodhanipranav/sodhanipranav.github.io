@@ -228,7 +228,7 @@ function getChapterTitle(chapterNum) {
         case "12": return "Driver Safety";
         case "13": return "Seniors and Driving";
         case "14": return "Glossary";
-        default: return `Chapter ${chapterNum}`;
+        default: return `${chapterNum}`;
     }
 }
 
@@ -245,7 +245,7 @@ function initializeChapters() {
         // Create button for main chapter list
         const chapterBtn = document.createElement('button');
         chapterBtn.className = 'chapter-btn';
-        chapterBtn.textContent = `Chapter ${chapter}: ${chapterData.title}`;
+        chapterBtn.textContent = `${chapter}: ${chapterData.title}`;
         
         if (hasSubsections) {
             // Make chapter collapsible only if it has subsections
@@ -287,7 +287,7 @@ function initializeChapters() {
 
         const menuChapterBtn = document.createElement('button');
         menuChapterBtn.className = 'menu-chapter-btn';
-        menuChapterBtn.textContent = `Chapter ${chapter}: ${chapterData.title}`;
+        menuChapterBtn.textContent = `${chapter}: ${chapterData.title}`;
         
         if (hasSubsections) {
             // Make menu chapter collapsible only if it has subsections
@@ -351,9 +351,9 @@ function startSection(chapter, section) {
     
     // Only show section title if it exists
     if (sectionData && sectionData.title) {
-        document.getElementById('chapter-title').textContent = `Chapter ${chapter}: ${chapterData.title} - ${sectionData.title}`;
+        document.getElementById('chapter-title').textContent = `Section ${chapter}: ${chapterData.title} - ${sectionData.title}`;
     } else {
-        document.getElementById('chapter-title').textContent = `Chapter ${chapter}: ${chapterData.title}`;
+        document.getElementById('chapter-title').textContent = `Section ${chapter}: ${chapterData.title}`;
     }
     
     // Store current section questions
@@ -577,7 +577,7 @@ function startChapter(chapterNum) {
     
     // For chapters without sections, just show the chapter title
     const chapterData = quizData[chapterNum];
-    document.getElementById('chapter-title').textContent = `Chapter ${chapterNum}: ${chapterData.title}`;
+    document.getElementById('chapter-title').textContent = `Section ${chapterNum}: ${chapterData.title}`;
     
     // Close the menu
     sideMenu.classList.remove('active');

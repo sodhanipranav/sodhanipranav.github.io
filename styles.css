@@ -225,8 +225,8 @@ button:hover {
 .side-menu {
     position: fixed;
     top: 0;
-    left: -280px;
-    width: 280px;
+    left: -380px;
+    width: 380px;
     height: 100vh;
     background: white;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
@@ -541,23 +541,22 @@ button:hover {
 }
 
 .chapter-btn.has-sections, .menu-chapter-btn.has-sections {
-    /*background-color: #f5f5f5;*/
-    color: #333;
-    /*font-weight: 500;*/
-    border-left: 4px solid #4CAF50;
-    cursor: pointer;
     position: relative;
+    padding-right: 30px; /* Add space for the arrow */
 }
 
 .chapter-btn.has-sections::after, .menu-chapter-btn.has-sections::after {
     content: "▼";
     position: absolute;
-    right: 15px;
-    transition: transform 0.3s;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+    font-size: 0.8em;
 }
 
 .chapter-btn.has-sections.active::after, .menu-chapter-btn.has-sections.active::after {
-    transform: rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
 }
 
 .section-btn, .menu-section-btn {
