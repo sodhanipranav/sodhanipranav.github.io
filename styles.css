@@ -523,3 +523,71 @@ button:hover {
     font-weight: 500;
     color: #333;
 }
+
+.chapter-container, .menu-chapter-container {
+    margin-bottom: 10px;
+}
+
+.sections-container, .menu-sections-container {
+    margin-left: 20px;
+    border-left: 2px solid #e0e0e0;
+    padding-left: 10px;
+    margin-top: 5px;
+    display: none; /* Hide sections by default */
+}
+
+.sections-container.active, .menu-sections-container.active {
+    display: block; /* Show sections when active */
+}
+
+.chapter-btn.has-sections, .menu-chapter-btn.has-sections {
+    /*background-color: #f5f5f5;*/
+    color: #333;
+    /*font-weight: 500;*/
+    border-left: 4px solid #4CAF50;
+    cursor: pointer;
+    position: relative;
+}
+
+.chapter-btn.has-sections::after, .menu-chapter-btn.has-sections::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s;
+}
+
+.chapter-btn.has-sections.active::after, .menu-chapter-btn.has-sections.active::after {
+    transform: rotate(180deg);
+}
+
+.section-btn, .menu-section-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 15px;
+    margin: 5px 0;
+    text-align: left;
+    background: none;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    color: #666;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.section-btn:hover, .menu-section-btn:hover {
+    background: #f5f5f5;
+    border-color: #4CAF50;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .sections-container, .menu-sections-container {
+        margin-left: 15px;
+        padding-left: 8px;
+    }
+
+    .section-btn, .menu-section-btn {
+        padding: 10px 12px;
+        min-height: 44px;
+    }
+}

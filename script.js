@@ -119,33 +119,56 @@ function parseCSV(csvText) {
         });
 
         console.log('Extracted values:', values);
+        console.log('Number of values:', values.length);
+        console.log('Expected columns:', headers.length);
 
         try {
+            // Validate that we have all required fields
+            if (!values[0]) throw new Error('Missing chapter number');
+            if (!values[3]) throw new Error('Missing question text');
+            if (!values[4]) throw new Error('Missing options');
+            if (!values[5]) throw new Error('Missing correct answer');
+
             // Parse options string into array of objects
-            const optionsArray = values[2].split(',').map(opt => {
+            const optionsString = values[4]; // Options is in column 5
+            console.log('Options string:', optionsString);
+            
+            const optionsArray = optionsString.split(',').map(opt => {
                 const [letter, text] = opt.split(':');
+                if (!letter || !text) {
+                    throw new Error(`Invalid option format: ${opt}`);
+                }
                 return {
-                    letter: letter,
-                    text: text
+                    letter: letter.trim(),
+                    text: text.trim()
                 };
             });
 
             const question = {
-                chapter: values[0],
-                question: values[1],
-                options: optionsArray,
-                correct: values[3],
-                note: values[4]
+                chapter: values[0], // Chapter number
+                section: values[1] || null, // Sub-section number (e.g., 6.1)
+                subSection: values[2] || null, // Sub-section name (only if there is a subsection)
+                question: values[3], // Question text
+                options: optionsArray, // Options array
+                correct: values[5], // Correct answer
+                note: values[6] || '', // Explanation note (optional)
+                page: values[7] || '', // Page number (optional)
+                difficulty: values[8] || '' // Difficulty level (optional)
             };
             console.log('Created question object:', question);
             questions.push(question);
         } catch (e) {
-            console.error('Error parsing row:', e);
-            console.error('Problematic values:', values);
+            console.error('Error parsing row:', e.message);
+            console.error('Row values:', values);
+            console.error('Row data:', row);
+            continue; // Skip this row and continue with the next one
         }
     }
 
     console.log('\nFinal questions array:', questions);
+    if (questions.length === 0) {
+        throw new Error('No valid questions were parsed from the CSV file');
+    }
     return questions;
 }
 
@@ -155,17 +178,33 @@ function organizeQuestionsByChapter(questions) {
     
     quizData = questions.reduce((acc, question) => {
         const chapterNum = question.chapter;
-        console.log(`Processing chapter ${chapterNum}`);
+        const section = question.section;
+        console.log(`Processing chapter ${chapterNum}, section ${section}`);
         
         if (!acc[chapterNum]) {
             const title = getChapterTitle(chapterNum);
             console.log(`Creating new chapter with title: ${title}`);
             acc[chapterNum] = {
-                questions: [],
-                title: title
+                title: title,
+                sections: {},
+                questions: [] // For questions without sections
             };
         }
-        acc[chapterNum].questions.push(question);
+
+        // Only create sections if there's an actual section number and subsection name
+        if (section && section.trim() && question.subSection) {
+            if (!acc[chapterNum].sections[section]) {
+                acc[chapterNum].sections[section] = {
+                    title: question.subSection,
+                    questions: []
+                };
+            }
+            acc[chapterNum].sections[section].questions.push(question);
+        } else {
+            // If no valid section or subsection, add to main chapter questions
+            acc[chapterNum].questions.push(question);
+        }
+        
         return acc;
     }, {});
     
@@ -196,98 +235,144 @@ function getChapterTitle(chapterNum) {
 // Modify initializeChapters function
 function initializeChapters() {
     Object.keys(quizData).forEach(chapter => {
+        const chapterData = quizData[chapter];
+        const hasSubsections = Object.keys(chapterData.sections).length > 0;
+        
+        // Create container for chapter and its sections
+        const chapterContainer = document.createElement('div');
+        chapterContainer.className = 'chapter-container';
+
         // Create button for main chapter list
         const chapterBtn = document.createElement('button');
         chapterBtn.className = 'chapter-btn';
-        chapterBtn.textContent = `Chapter ${chapter}: ${quizData[chapter].title}`;
-        chapterBtn.addEventListener('click', () => startChapter(chapter));
-        chaptersList.appendChild(chapterBtn);
+        chapterBtn.textContent = `Chapter ${chapter}: ${chapterData.title}`;
+        
+        if (hasSubsections) {
+            // Make chapter collapsible only if it has subsections
+            chapterBtn.classList.add('has-sections');
+            chapterBtn.addEventListener('click', () => {
+                const sectionsContainer = chapterContainer.querySelector('.sections-container');
+                const isActive = sectionsContainer.classList.contains('active');
+                sectionsContainer.classList.toggle('active');
+                chapterBtn.classList.toggle('active');
+            });
+            
+            // Create and add sections container
+            const sectionsContainer = document.createElement('div');
+            sectionsContainer.className = 'sections-container';
+            
+            // Add subsections
+            Object.keys(chapterData.sections).sort().forEach(section => {
+                const sectionData = chapterData.sections[section];
+                const sectionBtn = document.createElement('button');
+                sectionBtn.className = 'section-btn';
+                sectionBtn.textContent = `${section}: ${sectionData.title}`;
+                sectionBtn.addEventListener('click', () => startSection(chapter, section));
+                sectionsContainer.appendChild(sectionBtn);
+            });
+            
+            chapterContainer.appendChild(chapterBtn);
+            chapterContainer.appendChild(sectionsContainer);
+        } else {
+            // For chapters without subsections, make the chapter button directly start the quiz
+            chapterBtn.addEventListener('click', () => startChapter(chapter));
+            chapterContainer.appendChild(chapterBtn);
+        }
+        
+        chaptersList.appendChild(chapterContainer);
 
-        // Create button for side menu
+        // Create similar structure for side menu
+        const menuChapterContainer = document.createElement('div');
+        menuChapterContainer.className = 'menu-chapter-container';
+
         const menuChapterBtn = document.createElement('button');
         menuChapterBtn.className = 'menu-chapter-btn';
-        menuChapterBtn.textContent = `Chapter ${chapter}: ${quizData[chapter].title}`;
-        menuChapterBtn.addEventListener('click', () => {
-            startChapter(chapter);
-            sideMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-        });
-        menuChaptersList.appendChild(menuChapterBtn);
+        menuChapterBtn.textContent = `Chapter ${chapter}: ${chapterData.title}`;
+        
+        if (hasSubsections) {
+            // Make menu chapter collapsible only if it has subsections
+            menuChapterBtn.classList.add('has-sections');
+            menuChapterBtn.addEventListener('click', () => {
+                const sectionsContainer = menuChapterContainer.querySelector('.menu-sections-container');
+                const isActive = sectionsContainer.classList.contains('active');
+                sectionsContainer.classList.toggle('active');
+                menuChapterBtn.classList.toggle('active');
+            });
+            
+            const menuSectionsContainer = document.createElement('div');
+            menuSectionsContainer.className = 'menu-sections-container';
+            
+            // Add subsections to menu
+            Object.keys(chapterData.sections).sort().forEach(section => {
+                const sectionData = chapterData.sections[section];
+                const sectionBtn = document.createElement('button');
+                sectionBtn.className = 'menu-section-btn';
+                sectionBtn.textContent = `${section}: ${sectionData.title}`;
+                sectionBtn.addEventListener('click', () => {
+                    startSection(chapter, section);
+                    sideMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                });
+                menuSectionsContainer.appendChild(sectionBtn);
+            });
+            
+            menuChapterContainer.appendChild(menuChapterBtn);
+            menuChapterContainer.appendChild(menuSectionsContainer);
+        } else {
+            // For chapters without subsections, make the menu chapter button directly start the quiz
+            menuChapterBtn.addEventListener('click', () => {
+                startChapter(chapter);
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+            menuChapterContainer.appendChild(menuChapterBtn);
+        }
+        
+        menuChaptersList.appendChild(menuChapterContainer);
     });
 }
 
-// Add this function to handle chapter menu opening
-function openChapterMenu() {
-    console.log('Opening chapter menu'); // Debug log
-    sideMenu.classList.add('active');
-    menuOverlay.classList.add('active');
-}
-
-// Update the initialization section
-function initializeUI() {
-    // Menu button in top bar
-    menuBtn.addEventListener('click', openChapterMenu);
-
-    // Start practicing button
-    if (browseChaptersBtn) {
-        console.log('Browse chapters button found'); // Debug log
-        browseChaptersBtn.addEventListener('click', openChapterMenu);
-    } else {
-        console.error('Browse chapters button not found'); // Debug log
-    }
-
-    // Close menu button
-    closeMenu.addEventListener('click', () => {
-        sideMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-    });
-
-    // Overlay click
-    menuOverlay.addEventListener('click', () => {
-        sideMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-    });
-}
-
-// Update startChapter function
-function startChapter(chapterNum) {
-    // Only reset if we're actually changing chapters
-    if (currentChapter !== chapterNum) {
-        currentChapter = chapterNum;
-        currentQuestionIndex = 0;
-        correctCount = 0;
-        incorrectCount = 0;
-        incorrectQuestions = []; // Reset incorrect questions only when actually changing chapters
-        isRetestMode = false;
-    }
+// Add new function to start a section
+function startSection(chapter, section) {
+    currentChapter = chapter;
+    currentQuestionIndex = 0;
+    correctCount = 0;
+    incorrectCount = 0;
+    incorrectQuestions = [];
+    isRetestMode = false;
     
-    // Hide all sections first
     landingPage.classList.add('hidden');
     chapterSelection.classList.add('hidden');
     resultSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
     
-    const chapterTitle = quizData[chapterNum].title;
-    document.getElementById('chapter-title').textContent = `Chapter ${chapterNum}: ${chapterTitle}`;
+    const chapterData = quizData[chapter];
+    const sectionData = chapterData.sections[section];
     
-    // Close the menu
-    sideMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
+    // Only show section title if it exists
+    if (sectionData && sectionData.title) {
+        document.getElementById('chapter-title').textContent = `Chapter ${chapter}: ${chapterData.title} - ${sectionData.title}`;
+    } else {
+        document.getElementById('chapter-title').textContent = `Chapter ${chapter}: ${chapterData.title}`;
+    }
     
+    // Store current section questions
+    currentSectionQuestions = sectionData ? sectionData.questions : chapterData.questions;
     showQuestion();
 }
 
-// Update showQuestion function
+// Modify showQuestion function to use currentSectionQuestions when available
+let currentSectionQuestions = null;
+
 function showQuestion() {
     questionAnswered = false;
-    const question = quizData[currentChapter].questions[currentQuestionIndex];
-    const totalQuestions = quizData[currentChapter].questions.length;
+    const questions = currentSectionQuestions || quizData[currentChapter].questions;
+    const question = questions[currentQuestionIndex];
+    const totalQuestions = questions.length;
     
-    // Update progress and score in a single line with colored incorrect count
     const questionProgress = document.getElementById('question-progress');
     questionProgress.innerHTML = `Question ${currentQuestionIndex + 1} of ${totalQuestions}   |   <span class="incorrect-count">Incorrect: ${incorrectCount}</span>`;
     
-    // Remove the separate score display
     scoreDisplay.style.display = 'none';
     
     questionText.textContent = question.question;
@@ -307,10 +392,6 @@ function showQuestion() {
         optionsContainer.appendChild(button);
     });
 
-    // Update navigation buttons
-    //prevQuestionBtn.disabled = currentQuestionIndex === 0;
-    //nextQuestionBtn.disabled = currentQuestionIndex === quizData[currentChapter].questions.length - 1;
-
     nextBtn.classList.add('hidden');
     finishBtn.classList.add('hidden');
 }
@@ -320,7 +401,8 @@ function checkAnswer(selectedLetter) {
     if (questionAnswered) return;
     
     questionAnswered = true;
-    const question = quizData[currentChapter].questions[currentQuestionIndex];
+    const questions = currentSectionQuestions || quizData[currentChapter].questions;
+    const question = questions[currentQuestionIndex];
     const options = optionsContainer.children;
 
     const selectedButton = Array.from(options).find(
@@ -344,7 +426,7 @@ function checkAnswer(selectedLetter) {
     }
     
     // Update the combined progress and score display with colored incorrect count
-    const totalQuestions = quizData[currentChapter].questions.length;
+    const totalQuestions = questions.length;
     const questionProgress = document.getElementById('question-progress');
     questionProgress.innerHTML = `Question ${currentQuestionIndex + 1} of ${totalQuestions}   |   <span class="incorrect-count">Incorrect: ${incorrectCount}</span>`;
 
@@ -354,7 +436,7 @@ function checkAnswer(selectedLetter) {
     noteElement.textContent = question.note;
     optionsContainer.after(noteElement);
 
-    if (currentQuestionIndex === quizData[currentChapter].questions.length - 1) {
+    if (currentQuestionIndex === totalQuestions - 1) {
         finishBtn.classList.remove('hidden');
     } else {
         nextBtn.classList.remove('hidden');
@@ -441,6 +523,71 @@ function startRetest() {
 
 // Add event listener for retest button
 retestBtn.addEventListener('click', startRetest);
+
+// Add this function to handle chapter menu opening
+function openChapterMenu() {
+    console.log('Opening chapter menu'); // Debug log
+    sideMenu.classList.add('active');
+    menuOverlay.classList.add('active');
+}
+
+// Add the initialization section
+function initializeUI() {
+    // Menu button in top bar
+    menuBtn.addEventListener('click', openChapterMenu);
+
+    // Start practicing button
+    if (browseChaptersBtn) {
+        console.log('Browse chapters button found'); // Debug log
+        browseChaptersBtn.addEventListener('click', openChapterMenu);
+    } else {
+        console.error('Browse chapters button not found'); // Debug log
+    }
+
+    // Close menu button
+    closeMenu.addEventListener('click', () => {
+        sideMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+    });
+
+    // Overlay click
+    menuOverlay.addEventListener('click', () => {
+        sideMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+    });
+}
+
+// Update startChapter function
+function startChapter(chapterNum) {
+    // Only reset if we're actually changing chapters
+    if (currentChapter !== chapterNum) {
+        currentChapter = chapterNum;
+        currentQuestionIndex = 0;
+        correctCount = 0;
+        incorrectCount = 0;
+        incorrectQuestions = []; // Reset incorrect questions only when actually changing chapters
+        isRetestMode = false;
+    }
+    
+    // Hide all sections first
+    landingPage.classList.add('hidden');
+    chapterSelection.classList.add('hidden');
+    resultSection.classList.add('hidden');
+    quizSection.classList.remove('hidden');
+    
+    // For chapters without sections, just show the chapter title
+    const chapterData = quizData[chapterNum];
+    document.getElementById('chapter-title').textContent = `Chapter ${chapterNum}: ${chapterData.title}`;
+    
+    // Close the menu
+    sideMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+    
+    // Reset current section questions
+    currentSectionQuestions = null;
+    
+    showQuestion();
+}
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
