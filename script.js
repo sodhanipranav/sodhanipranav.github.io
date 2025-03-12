@@ -12,6 +12,9 @@ let incorrectCount = 0;
 let incorrectQuestions = [];
 let isRetestMode = false;
 
+// Add this structure to track incorrect questions with context
+let incorrectQuestionsWithContext = [];
+
 // DOM Elements
 const chapterSelection = document.getElementById('chapter-selection');
 const chaptersList = document.getElementById('chapters-list');
@@ -365,10 +368,12 @@ function initializeChapters() {
 // Add new function to start a section
 function startSection(chapter, section) {
     currentChapter = chapter;
+    currentSection = section;
     currentQuestionIndex = 0;
     correctCount = 0;
     incorrectCount = 0;
-    incorrectQuestions = [];
+    // Clear incorrect questions when starting a new section
+    incorrectQuestionsWithContext = [];
     isRetestMode = false;
     
     landingPage.classList.add('hidden');
@@ -445,14 +450,45 @@ function checkAnswer(selectedLetter) {
     if (selectedLetter === question.correct) {
         selectedButton.classList.add('correct');
         correctCount++;
+        
+        // If in retest mode and answered correctly, remove from incorrect questions
+        if (isRetestMode) {
+            const index = incorrectQuestionsWithContext.findIndex(q => q.question === question.question);
+            if (index !== -1) {
+                incorrectQuestionsWithContext.splice(index, 1);
+            }
+        }
     } else {
         selectedButton.classList.add('incorrect');
         correctButton.classList.add('correct');
         incorrectCount++;
-        // Only store incorrect questions during regular mode, not during retest
+        
         if (!isRetestMode) {
-            incorrectQuestions.push(question);
+            // In regular mode, add to incorrect questions
+            const questionWithContext = {
+                ...question,
+                chapterNum: currentChapter,
+                sectionNum: currentSection,
+                questionIndex: currentQuestionIndex,
+                options: [...question.options],
+                timestamp: Date.now()
+            };
+            
+            // Check if this question is already in the incorrect questions array
+            const existingIndex = incorrectQuestionsWithContext.findIndex(
+                q => q.question === question.question
+            );
+            
+            if (existingIndex !== -1) {
+                // Update existing entry with most recent attempt
+                incorrectQuestionsWithContext[existingIndex] = questionWithContext;
+            } else {
+                // Add new incorrect question
+                incorrectQuestionsWithContext.push(questionWithContext);
+            }
         }
+        // Note: In retest mode, incorrect answers are already in incorrectQuestionsWithContext
+        // so we don't need to add them again
     }
     
     // Update the combined progress and score display with colored incorrect count
@@ -484,16 +520,22 @@ finishBtn.addEventListener('click', () => {
     resultSection.classList.remove('hidden');
     finalScore.textContent = `Correct: ${correctCount}, Incorrect: ${incorrectCount}`;
     
-    // Show retest button if there are any incorrect answers
-    if (incorrectCount > 0) {
-        retestBtn.classList.remove('hidden');
-    } else {
-        retestBtn.classList.add('hidden');
-    }
-    
-    // Clean up retest data if we're finishing a retest
     if (isRetestMode) {
+        // If we're finishing a retest, only show retest button if there are still incorrect questions
+        if (incorrectQuestionsWithContext.length > 0) {
+            retestBtn.classList.remove('hidden');
+        } else {
+            retestBtn.classList.add('hidden');
+        }
+        // Clean up retest data
         delete quizData['retest'];
+    } else {
+        // Regular mode - show retest button if there are incorrect answers from this session
+        if (incorrectCount > 0) {
+            retestBtn.classList.remove('hidden');
+        } else {
+            retestBtn.classList.add('hidden');
+        }
     }
 });
 
@@ -522,7 +564,7 @@ nextQuestionBtn.addEventListener('click', () => {
 
 // Update startRetest function
 function startRetest() {
-    if (incorrectQuestions.length === 0) {
+    if (incorrectQuestionsWithContext.length === 0) {
         alert('No questions to retest!');
         return;
     }
@@ -532,9 +574,12 @@ function startRetest() {
     correctCount = 0;
     incorrectCount = 0;
     
-    // Create a deep copy of incorrect questions
+    // Create retest questions structure with proper deep copy
     const retestQuestions = {
-        questions: incorrectQuestions.map(q => ({...q})),
+        questions: incorrectQuestionsWithContext.map(q => ({
+            ...q,
+            options: [...q.options]
+        })),
         title: 'Retest Wrong Answers'
     };
     
@@ -547,6 +592,7 @@ function startRetest() {
     // Store retest questions in quizData
     currentChapter = 'retest';
     quizData[currentChapter] = retestQuestions;
+    currentSectionQuestions = retestQuestions.questions;
     
     showQuestion();
 }
@@ -592,10 +638,12 @@ function startChapter(chapterNum) {
     // Only reset if we're actually changing chapters
     if (currentChapter !== chapterNum) {
         currentChapter = chapterNum;
+        currentSection = null;
         currentQuestionIndex = 0;
         correctCount = 0;
         incorrectCount = 0;
-        incorrectQuestions = []; // Reset incorrect questions only when actually changing chapters
+        // Clear incorrect questions when changing chapters
+        incorrectQuestionsWithContext = [];
         isRetestMode = false;
     }
     
