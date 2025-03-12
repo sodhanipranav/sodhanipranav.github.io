@@ -251,6 +251,21 @@ function initializeChapters() {
             // Make chapter collapsible only if it has subsections
             chapterBtn.classList.add('has-sections');
             chapterBtn.addEventListener('click', () => {
+                // Close all other sections first
+                const allChapterBtns = document.querySelectorAll('.chapter-btn.has-sections');
+                const allSectionContainers = document.querySelectorAll('.sections-container');
+                allChapterBtns.forEach(btn => {
+                    if (btn !== chapterBtn) {
+                        btn.classList.remove('active');
+                    }
+                });
+                allSectionContainers.forEach(container => {
+                    if (container !== chapterContainer.querySelector('.sections-container')) {
+                        container.classList.remove('active');
+                    }
+                });
+
+                // Toggle current section
                 const sectionsContainer = chapterContainer.querySelector('.sections-container');
                 const isActive = sectionsContainer.classList.contains('active');
                 sectionsContainer.classList.toggle('active');
@@ -293,6 +308,21 @@ function initializeChapters() {
             // Make menu chapter collapsible only if it has subsections
             menuChapterBtn.classList.add('has-sections');
             menuChapterBtn.addEventListener('click', () => {
+                // Close all other sections first in the side menu
+                const allMenuChapterBtns = document.querySelectorAll('.menu-chapter-btn.has-sections');
+                const allMenuSectionContainers = document.querySelectorAll('.menu-sections-container');
+                allMenuChapterBtns.forEach(btn => {
+                    if (btn !== menuChapterBtn) {
+                        btn.classList.remove('active');
+                    }
+                });
+                allMenuSectionContainers.forEach(container => {
+                    if (container !== menuChapterContainer.querySelector('.menu-sections-container')) {
+                        container.classList.remove('active');
+                    }
+                });
+
+                // Toggle current section
                 const sectionsContainer = menuChapterContainer.querySelector('.menu-sections-container');
                 const isActive = sectionsContainer.classList.contains('active');
                 sectionsContainer.classList.toggle('active');
@@ -351,7 +381,7 @@ function startSection(chapter, section) {
     
     // Only show section title if it exists
     if (sectionData && sectionData.title) {
-        document.getElementById('chapter-title').textContent = `Section ${chapter}: ${chapterData.title} - ${sectionData.title}`;
+        document.getElementById('chapter-title').textContent = `Section ${section}: ${chapterData.title} - ${sectionData.title}`;
     } else {
         document.getElementById('chapter-title').textContent = `Section ${chapter}: ${chapterData.title}`;
     }
