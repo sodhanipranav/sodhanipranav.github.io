@@ -12,7 +12,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMV Question Bank</title>
+    <title>California DMV Question Bank</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
@@ -24,13 +24,13 @@
             <button id="menu-btn" class="menu-btn">☰</button>
             <a href="/" class="brand-link"><h1 class="brand">DMV Question Bank</h1></a>
         </div>
-<style>
-    .floatingchat-container-wrap { left: unset; right: 16px; width: 50%; }
-    .floatingchat-container-wrap-mobi { left: unset; right: 8px; width: 50%;}
-    .floating-chat-kofi-popup-iframe { left: unset; right: 16px; }
-    .floating-chat-kofi-popup-iframe-mobi { left: unset; right: 8px; }
-    .floating-chat-kofi-popup-iframe-closer-mobi { left: unset; right: 8px; }
-</style>
+        <style>
+            .floatingchat-container-wrap { left: unset; right: 16px; width: 50%; }
+            .floatingchat-container-wrap-mobi { left: unset; right: 8px; width: 50%;}
+            .floating-chat-kofi-popup-iframe { left: unset; right: 16px; }
+            .floating-chat-kofi-popup-iframe-mobi { left: unset; right: 8px; }
+            .floating-chat-kofi-popup-iframe-closer-mobi { left: unset; right: 8px; }
+        </style>
     </div>
     <div id="side-menu" class="side-menu">
         <div class="side-menu-header">
@@ -46,7 +46,11 @@
             <div class="hero-section">
                 <h1>California DMV Permit Test Practice 2025</h1>
                 <p class="subheadline">Practice 500+ real DMV questions <span class="highlight">one section at a time</span> to ensure you pass the DMV permit test with confidence.</p>
-                <button id="browse-chapters" class="cta-button">Practice DMV Questions</button>
+                <p class="subheadline">Try our AI generated Quick Study Guide to prepare you for the DMV permit test in under 30 minutes.</p>
+                <div class="button-group">
+                    <button id="browse-chapters" class="cta-button">Practice DMV Questions</button>
+                    <a href="study-guide.html" target="_blank" class="cta-button study-guide-btn">Quick DMV Study Guide</a>
+                </div>
             </div>
 
             <div class="features">
@@ -144,7 +148,7 @@
         </div>
 
         <div id="result-section" class="section hidden">
-            <h2>Great! You've completed all questions from this section of the DMV handbook.</h2>
+            <h2>Great! You've completed this section.</h2>
             <p>Your Score: <span id="final-score">0</span></p>
             <button id="retest-btn" class="hidden">Retest Wrong Answers</button>
             <button id="restart-btn">Try Another Section</button>
@@ -157,7 +161,6 @@
         }
     </script>
     <script src="script.js"></script>
-    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
     <script>
       kofiWidgetOverlay.draw('dmvquestionbank', {
         'type': 'floating-chat',

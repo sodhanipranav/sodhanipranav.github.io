@@ -416,7 +416,7 @@ button:hover {
 .hero-section h1 {
     font-size: 1.7rem;
     color: #041704;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
     font-weight: 600;
 }
@@ -442,6 +442,12 @@ button:hover {
     transition: all 0.3s;
     font-weight: 500;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    line-height: 1.5;
+    min-height: 48px;
 }
 
 .cta-button:hover {
@@ -768,5 +774,197 @@ button:hover {
 
     .faq-answer {
         font-size: 0.85rem;
+    }
+}
+
+/* Add Study Guide Styles */
+.study-guide-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.study-section {
+    margin-bottom: 35px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0 25px 25px 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.study-section h2 {
+    color: #041704;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.study-item {
+    margin-bottom: 25px;
+}
+
+.study-item:last-child {
+    margin-bottom: 0;
+}
+
+.study-item h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+.study-item p {
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.study-item ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 15px;
+}
+
+.study-item li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: #495057;
+}
+
+.study-item li::before {
+    content: "•";
+    color: #4CAF50;
+    font-weight: bold;
+    position: absolute;
+    left: 8px;
+}
+
+.study-item .warning {
+    color: #dc3545;
+}
+
+.study-item .warning::before {
+    color: #dc3545;
+}
+
+.alert-box {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.alert-box p {
+    color: #856404;
+    margin: 0;
+}
+
+.note {
+    color: #666;
+    font-style: italic;
+    padding-left: 12px;
+    border-left: 3px solid #4CAF50;
+    margin-top: 10px;
+}
+
+.cta-section {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    color: #495057;
+    margin-bottom: 20px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .study-section {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .study-section h2 {
+        font-size: 1.3rem;
+    }
+
+    .study-item h3 {
+        font-size: 1.05rem;
+    }
+
+    .study-item {
+        margin-bottom: 20px;
+    }
+
+    .alert-box {
+        padding: 12px;
+    }
+
+    .cta-section {
+        padding: 20px 0;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .study-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .study-section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .study-item h3 {
+        font-size: 1rem;
+    }
+
+    .study-item p,
+    .study-item li {
+        font-size: 0.95rem;
+    }
+
+    .alert-box {
+        padding: 10px;
+    }
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.study-guide-btn {
+    background-color: #007bff;
+}
+
+.study-guide-btn:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .cta-button {
+        width: 100%;
+        max-width: 300px;
+        min-height: 44px;
     }
 }
