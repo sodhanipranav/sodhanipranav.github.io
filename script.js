@@ -607,30 +607,49 @@ function openChapterMenu() {
     menuOverlay.classList.add('active');
 }
 
-// Add the initialization section
+// Add FAQ functionality
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            // Close other open items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    });
+}
+
+// Update initializeUI function to include FAQ initialization
 function initializeUI() {
-    // Menu button in top bar
+    // Existing initialization code
     menuBtn.addEventListener('click', openChapterMenu);
 
-    // Start practicing button
     if (browseChaptersBtn) {
-        console.log('Browse chapters button found'); // Debug log
+        console.log('Browse chapters button found');
         browseChaptersBtn.addEventListener('click', openChapterMenu);
     } else {
-        console.error('Browse chapters button not found'); // Debug log
+        console.error('Browse chapters button not found');
     }
 
-    // Close menu button
     closeMenu.addEventListener('click', () => {
         sideMenu.classList.remove('active');
         menuOverlay.classList.remove('active');
     });
 
-    // Overlay click
     menuOverlay.addEventListener('click', () => {
         sideMenu.classList.remove('active');
         menuOverlay.classList.remove('active');
     });
+
+    // Initialize FAQ
+    initializeFAQ();
 }
 
 // Update startChapter function
