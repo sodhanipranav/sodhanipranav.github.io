@@ -42,7 +42,7 @@ const landingPage = document.getElementById('landing-page');
 // Fetch and process CSV data
 async function fetchQuizData() {
     try {
-        const response = await fetch('quiz_data.csv');
+        const response = await fetch('quiz_data_small.csv');
         const csvText = await response.text();
         const questions = parseCSV(csvText);
         organizeQuestionsByChapter(questions);

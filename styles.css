@@ -511,9 +511,14 @@ button:hover {
 }
 
 /* Add this style for the highlighted text */
-.highlight {
+.highlight-green {
     color: #2e9031;
     font-weight: 500;
+}
+
+.highlight-blue {
+    color: #007bff;
+    font-weight: 800;
 }
 
 /* Add styles for the result section */
@@ -967,4 +972,127 @@ button:hover {
         max-width: 300px;
         min-height: 44px;
     }
+}
+
+.premium-feature {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 40px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.premium-feature h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.premium-feature p {
+    color: #495057;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+    .premium-feature {
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .premium-feature h3 {
+        font-size: 1.3rem;
+    }
+
+    .premium-feature p {
+        font-size: 1rem;
+    }
+}
+
+.premium-btn {
+    background-color: #007bff !important;
+    color: white !important;
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    line-height: 1.5;
+    min-height: 48px;
+}
+
+.premium-btn:hover {
+    background-color: #0056b3 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.premium-btn i {
+    margin-right: 8px;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .premium-btn {
+        width: 100%;
+        max-width: 300px;
+        min-height: 44px;
+    }
+
+    .premium-btn i {
+        margin-right: 6px;
+        font-size: 0.85em;
+    }
+}
+
+.study-guide-link {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.study-guide-link a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.study-guide-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .study-guide-link {
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+.fixed-button-container {
+    position: fixed;
+    bottom: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.fixed-button-container .premium-btn {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust padding as needed */
+    background-color: #28a745; /* Change to your desired color */
+    color: white; /* Text color */
+    border-radius: 30px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.fixed-button-container .premium-btn:hover {
+    background-color: #218838; /* Darker shade on hover */
 }
