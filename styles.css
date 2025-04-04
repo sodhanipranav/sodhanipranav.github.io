@@ -1096,3 +1096,26 @@ button:hover {
 .fixed-button-container .premium-btn:hover {
     background-color: #218838; /* Darker shade on hover */
 }
+
+.footer {
+    background-color: #f1f1f1; /* Light background color */
+    padding: 20px; /* Padding around the footer */
+    text-align: center; /* Centered text */
+    position: relative; /* Positioning */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+}
+
+.footer p {
+    margin: 5px 0; /* Margin for paragraphs */
+    color: #666; /* Gray color for text */
+}
+
+.footer a {
+    color: rgb(10, 141, 18); /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
