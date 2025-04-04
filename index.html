@@ -31,21 +31,7 @@
             .floating-chat-kofi-popup-iframe { left: unset; right: 16px; }
             .floating-chat-kofi-popup-iframe-mobi { left: unset; right: 8px; }
             .floating-chat-kofi-popup-iframe-closer-mobi { left: unset; right: 8px; }
-            .contact-us-section {
-                background-color: #f9f9f9; /* Light background color */
-                padding: 20px; /* Padding around the section */
-                margin: 20px 0; /* Margin above and below the section */
-                border-radius: 8px; /* Rounded corners */
-                text-align: center; /* Centered text */
-            }
-
-            .contact-us-section h2 {
-                color: #333; /* Darker color for the heading */
-            }
-
-            .contact-us-section p {
-                color: #666; /* Gray color for the text */
-            }
+            
         </style>
     </div>
     <div id="side-menu" class="side-menu">
@@ -66,7 +52,7 @@
                 <div class="button-group">
                     <button id="browse-chapters" class="cta-button">Practice Free Questions</button>
                     <a href="https://buy.stripe.com/5kA9AV0bZ3C14pi9AA" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'payment', 'event_label': 'Stripe Payment Link' });" class="premium-btn cta-button">
-                        <i class="fas fa-lock"></i> Full Question Bank
+                        <i class="fas fa-lock"></i> Full Question Bank - $10
                     </a>
                 </div>
             </div>
@@ -150,11 +136,24 @@
                     </div>
                 </div>
             </section>
-            <section class="faq-section">
+            <!-- <section class="faq-section">
                 <div class="features">
                     <h2>Contact Us</h2>
                     <p class="subheadline">If you have any questions or need assistance, feel free to reach out to us at: <a href="mailto:dmvquestionbank@gmail.com" style="text-decoration: none; color:rgb(10, 141, 18)">dmvquestionbank@gmail.com</a></p>
                 </div>
+            </section> -->
+            <section class="contact-us-section">
+                <h2>Want a free PDF with Top 150 DMV questions?</h2>
+                <br/>
+                <p>Enter your email & we will send you the free PDF!</p>
+        
+                <form action="https://formsubmit.co/dmvquestionbank@gmail.com" target="_blank" method="POST">
+                    <div class="form-group">
+                        <label for="email"></label>
+                        <input type="email" name="email" required placeholder="Your email address">
+                    </div> 
+                    <button type="submit">Submit</button>
+                </form>
             </section>
         </div>
 
@@ -180,7 +179,7 @@
             <button id="finish-btn" class="hidden">Finish Section</button>
             <div class="fixed-button-container">
                 <a href="https://buy.stripe.com/5kA9AV0bZ3C14pi9AA" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'payment', 'event_label': 'Stripe Payment Link' });" class="premium-btn cta-button">
-                    <i class="fas fa-lock"></i>Full Question Bank
+                    <i class="fas fa-lock"></i>Full Question Bank - $10
                 </a>
             </div>
         </div>
@@ -190,12 +189,18 @@
             <p>Your Score: <span id="final-score">0</span></p>
             <button id="retest-btn" class="hidden">Retest Wrong Answers</button>
             <button id="restart-btn">Try Another Section</button>
+            <div class="fixed-button-container">
+                <a href="https://buy.stripe.com/5kA9AV0bZ3C14pi9AA" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'payment', 'event_label': 'Stripe Payment Link' });" class="premium-btn cta-button">
+                    <i class="fas fa-lock"></i>Full Question Bank - $10
+                </a>
+            </div>
         </div>
     </div>
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 DMV Question Bank. All rights reserved.</p>
-            <p><a href="terms-and-conditions.html" target="_blank" style="text-decoration: none; color: rgb(10, 141, 18);">Terms and Conditions</a></p>
+            <p>&copy; 2025 DMV Question Bank. All rights reserved. </p>
+            <p>Contact us at <a href="mailto:dmvquestionbank@gmail.com" style="text-decoration: none; color: rgb(10, 141, 18);">dmvquestionbank@gmail.com</a></p>
+            <p><a href="terms-and-conditions.html" target="_blank" style="text-decoration: none; color: rgb(24, 124, 212);">Terms and Conditions</a></p>
         </div>
     </footer>
     <script src="script.js?v=2.0"></script>

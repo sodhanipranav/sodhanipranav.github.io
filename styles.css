@@ -1119,3 +1119,86 @@ button:hover {
 .footer a:hover {
     text-decoration: underline; /* Underline on hover */
 }
+
+.contact-us-section {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 20px; /* Padding around the section */
+    margin: 20px 0; /* Margin above and below the section */
+    border-radius: 8px; /* Rounded corners */
+    text-align: center; /* Centered text */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.contact-us-section h2 {
+    color: #333; /* Darker color for the heading */
+    margin-bottom: 10px; /* Space below the heading */
+    font-size: 1.3em;
+}
+
+.contact-us-section p {
+    color: #666; /* Gray color for the text */
+    margin-bottom: 20px; /* Space below the paragraph */
+}
+
+.contact-us-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the form elements */
+    max-width: 500px; /* Max width for larger screens */
+    margin: 0 auto; /* Center the form */
+}
+
+.form-group {
+    width: 100%; /* Full width for form groups */
+    margin-bottom: 15px; /* Space between fields */
+}
+
+.contact-us-section label {
+    margin-bottom: 5px; /* Margin for labels */
+    font-weight: bold; /* Bold labels */
+    color: #333; /* Darker color for labels */
+}
+
+.contact-us-section input,
+.contact-us-section textarea {
+    width: 100%; /* Full width of input fields */
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for better readability */
+}
+
+.contact-us-section button {
+    padding: 10px 20px; /* Padding for the button */
+    background-color: #28a745; /* Button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for better readability */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.contact-us-section button:hover {
+    background-color: #218838; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .contact-us-section {
+        padding: 15px; /* Reduce padding on smaller screens */
+    }
+
+    .contact-us-section h2 {
+        font-size: 1.3rem; /* Adjust heading size */
+    }
+
+    .contact-us-section input,
+    .contact-us-section textarea {
+        font-size: 14px; /* Smaller font size for inputs */
+    }
+
+    .contact-us-section button {
+        font-size: 14px; /* Smaller font size for button */
+    }
+}
